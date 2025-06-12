@@ -44,6 +44,62 @@ class ProductService {
     return categories;
   }
 
+  async getCategoryTree() {
+    await delay(200);
+    const categories = await this.getCategories();
+    return categories.map(category => ({
+      id: category.toLowerCase().replace(/\s+/g, '-'),
+      name: category,
+      count: this.data.filter(product => product.category === category).length
+    }));
+  }
+
+  async getPriceRange() {
+    await delay(200);
+    const prices = this.data.map(product => product.price);
+    return {
+      min: Math.floor(Math.min(...prices)),
+      max: Math.ceil(Math.max(...prices))
+    };
+  }
+
+  async filterProducts(products, filters) {
+    await delay(100);
+    
+    let filtered = [...products];
+
+    // Price range filter
+    if (filters.priceRange) {
+      filtered = filtered.filter(product => 
+        product.price >= filters.priceRange.min && 
+        product.price <= filters.priceRange.max
+      );
+    }
+
+    // Categories filter
+    if (filters.categories && filters.categories.length > 0) {
+      filtered = filtered.filter(product =>
+        filters.categories.includes(product.category)
+      );
+    }
+
+    // Rating filter
+    if (filters.minRating && filters.minRating > 0) {
+      filtered = filtered.filter(product =>
+        (product.rating || 0) >= filters.minRating
+      );
+    }
+
+    // Stock availability filter
+    if (filters.inStockOnly) {
+      filtered = filtered.filter(product =>
+        product.stock > 0
+      );
+    }
+
+    return filtered.map(product => ({ ...product }));
+  }
+
   async getFeatured() {
     await delay(250);
     return this.data.filter(product => product.featured).map(product => ({ ...product }));
