@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
+import ReactImageZoom from 'react-image-zoom';
 import ApperIcon from '@/components/ApperIcon';
 import QuantitySelector from '@/components/molecules/QuantitySelector';
 import Button from '@/components/atoms/Button';
@@ -12,10 +13,12 @@ import { productService, cartService } from '@/services';
 const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [product, setProduct] = useState(null);
+const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [showZoom, setShowZoom] = useState(false);
 
   useEffect(() => {
     loadProduct();
@@ -148,13 +151,116 @@ const ProductDetailPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="grid grid-cols-1 lg:grid-cols-2 gap-8"
         >
-          {/* Product Image */}
+{/* Product Image Carousel */}
           <div className="relative">
-            <img
-              src={product.imageUrl}
-              alt={product.name}
-              className="w-full aspect-square object-cover rounded-lg shadow-sm"
-            />
+            {/* Main Image Display */}
+            <div className="relative group">
+              {product.images && product.images.length > 1 ? (
+                <>
+                  <div 
+                    className="w-full aspect-square object-cover rounded-lg shadow-sm cursor-zoom-in overflow-hidden"
+                    onClick={() => setShowZoom(true)}
+                  >
+                    <img
+                      src={product.images[selectedImageIndex]}
+                      alt={`${product.name} - Image ${selectedImageIndex + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  
+                  {/* Navigation Arrows */}
+                  {product.images.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => setSelectedImageIndex(prev => 
+                          prev === 0 ? product.images.length - 1 : prev - 1
+                        )}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      >
+                        <ApperIcon name="ChevronLeft" className="w-5 h-5 text-gray-700" />
+                      </button>
+                      <button
+                        onClick={() => setSelectedImageIndex(prev => 
+                          prev === product.images.length - 1 ? 0 : prev + 1
+                        )}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      >
+                        <ApperIcon name="ChevronRight" className="w-5 h-5 text-gray-700" />
+                      </button>
+                    </>
+                  )}
+                </>
+              ) : (
+                <div 
+                  className="w-full aspect-square object-cover rounded-lg shadow-sm cursor-zoom-in overflow-hidden"
+                  onClick={() => setShowZoom(true)}
+                >
+                  <img
+                    src={product.imageUrl || (product.images && product.images[0])}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Thumbnail Navigation */}
+            {product.images && product.images.length > 1 && (
+              <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                {product.images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImageIndex(index)}
+                    className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                      selectedImageIndex === index 
+                        ? 'border-primary ring-2 ring-primary/20' 
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <img
+                      src={image}
+                      alt={`${product.name} thumbnail ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Zoom Modal */}
+            <AnimatePresence>
+              {showZoom && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+                  onClick={() => setShowZoom(false)}
+                >
+                  <motion.div
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0.8 }}
+                    className="relative max-w-4xl max-h-full"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <ReactImageZoom
+                      width={600}
+                      height={600}
+                      zoomWidth={400}
+                      img={product.images ? product.images[selectedImageIndex] : (product.imageUrl || product.images?.[0])}
+                      zoomStyle="opacity: 0.8; background-color: white;"
+                    />
+                    <button
+                      onClick={() => setShowZoom(false)}
+                      className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 rounded-full p-2 text-white transition-colors"
+                    >
+                      <ApperIcon name="X" className="w-6 h-6" />
+                    </button>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             
             {product.featured && (
               <div className="absolute top-4 left-4">
