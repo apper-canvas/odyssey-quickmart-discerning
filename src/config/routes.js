@@ -5,6 +5,7 @@ import CheckoutPage from '@/components/pages/CheckoutPage';
 import OrdersPage from '@/components/pages/OrdersPage';
 import OrderDetailPage from '@/components/pages/OrderDetailPage';
 import CategoriesPage from '@/components/pages/CategoriesPage';
+import UserProfilePage from '@/components/pages/UserProfilePage';
 
 export const routes = {
   home: {
@@ -21,19 +22,26 @@ component: HomePage
     icon: 'Grid3X3',
 component: CategoriesPage
   },
-  orders: {
+orders: {
     id: 'orders',
     label: 'Orders',
     path: '/orders',
     icon: 'Package',
-component: OrdersPage
+    component: OrdersPage
+  },
+  profile: {
+    id: 'profile',
+    label: 'Profile',
+    path: '/profile',
+    icon: 'User',
+    component: UserProfilePage
   },
   cart: {
     id: 'cart',
     label: 'Cart',
     path: '/cart',
     icon: 'ShoppingCart',
-component: CartPage
+    component: CartPage
   },
   product: {
     id: 'product',
