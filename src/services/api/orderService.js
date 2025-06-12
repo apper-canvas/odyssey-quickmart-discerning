@@ -1,4 +1,5 @@
 import orderData from '../mockData/orders.json';
+import emailService from './emailService.js';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -40,7 +41,7 @@ class OrderService {
     return { ...order };
   }
 
-  async create(orderData) {
+async create(orderData) {
     await delay(400);
     
     const newOrder = {
@@ -60,10 +61,19 @@ class OrderService {
     
     this.orders.unshift(newOrder);
     this.saveOrders();
+    
+    // Send order confirmation email
+    try {
+      await emailService.sendOrderConfirmation(newOrder, orderData.email || 'customer@example.com');
+    } catch (error) {
+      console.error('Failed to send order confirmation email:', error);
+      // Don't fail the order creation if email fails
+    }
+    
     return { ...newOrder };
   }
 
-  async updateStatus(id, status) {
+async updateStatus(id, status) {
     await delay(200);
     
     const orderIndex = this.orders.findIndex(order => order.id === id);
@@ -86,6 +96,16 @@ class OrderService {
     });
     
     this.saveOrders();
+    
+    // Send email notification for status change
+    try {
+      const updatedOrder = { ...this.orders[orderIndex] };
+      await emailService.sendOrderStatusEmail(updatedOrder, updatedOrder.email || 'customer@example.com');
+    } catch (error) {
+      console.error('Failed to send status update email:', error);
+      // Don't fail the status update if email fails
+    }
+    
     return { ...this.orders[orderIndex] };
   }
 
