@@ -63,5 +63,3 @@ export const routes = {
 
 // Export routes as array for easier iteration
 export const routeArray = Object.values(routes);
-
-export const routeArray = Object.values(routes);
