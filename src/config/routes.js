@@ -1,11 +1,10 @@
-import HomePage from '@/components/pages/HomePage';
-import ProductDetailPage from '@/components/pages/ProductDetailPage';
-import CartPage from '@/components/pages/CartPage';
-import CheckoutPage from '@/components/pages/CheckoutPage';
-import OrdersPage from '@/components/pages/OrdersPage';
-import OrderDetailPage from '@/components/pages/OrderDetailPage';
-import CategoriesPage from '@/components/pages/CategoriesPage';
-import UserProfilePage from '@/components/pages/UserProfilePage';
+import HomePage from '@/components/pages/HomePage'
+import ProductDetailPage from '@/components/pages/ProductDetailPage'
+import CartPage from '@/components/pages/CartPage'
+import CheckoutPage from '@/components/pages/CheckoutPage'
+import OrdersPage from '@/components/pages/OrdersPage'
+import OrderDetailPage from '@/components/pages/OrderDetailPage'
+import CategoriesPage from '@/components/pages/CategoriesPage'
 
 export const routes = {
   home: {
@@ -13,28 +12,21 @@ export const routes = {
     label: 'Shop',
     path: '/',
     icon: 'Store',
-component: HomePage
+    component: HomePage
   },
   categories: {
     id: 'categories',
     label: 'Categories',
     path: '/categories',
     icon: 'Grid3X3',
-component: CategoriesPage
+    component: CategoriesPage
   },
-orders: {
+  orders: {
     id: 'orders',
     label: 'Orders',
     path: '/orders',
     icon: 'Package',
     component: OrdersPage
-  },
-  profile: {
-    id: 'profile',
-    label: 'Profile',
-    path: '/profile',
-    icon: 'User',
-    component: UserProfilePage
   },
   cart: {
     id: 'cart',
@@ -48,7 +40,7 @@ orders: {
     label: 'Product',
     path: '/product/:id',
     icon: 'Package',
-component: ProductDetailPage,
+    component: ProductDetailPage,
     hidden: true
   },
   checkout: {
@@ -56,7 +48,7 @@ component: ProductDetailPage,
     label: 'Checkout',
     path: '/checkout',
     icon: 'CreditCard',
-component: CheckoutPage,
+    component: CheckoutPage,
     hidden: true
   },
   orderDetail: {
@@ -64,9 +56,12 @@ component: CheckoutPage,
     label: 'Order Detail',
     path: '/order/:id',
     icon: 'Package',
-component: OrderDetailPage,
+    component: OrderDetailPage,
     hidden: true
   }
 };
+
+// Export routes as array for easier iteration
+export const routeArray = Object.values(routes);
 
 export const routeArray = Object.values(routes);
