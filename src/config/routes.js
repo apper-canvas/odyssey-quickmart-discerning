@@ -1,10 +1,10 @@
-import Home from '../pages/Home';
-import ProductDetail from '../pages/ProductDetail';
-import Cart from '../pages/Cart';
-import Checkout from '../pages/Checkout';
-import Orders from '../pages/Orders';
-import OrderDetail from '../pages/OrderDetail';
-import Categories from '../pages/Categories';
+import HomePage from '@/components/pages/HomePage';
+import ProductDetailPage from '@/components/pages/ProductDetailPage';
+import CartPage from '@/components/pages/CartPage';
+import CheckoutPage from '@/components/pages/CheckoutPage';
+import OrdersPage from '@/components/pages/OrdersPage';
+import OrderDetailPage from '@/components/pages/OrderDetailPage';
+import CategoriesPage from '@/components/pages/CategoriesPage';
 
 export const routes = {
   home: {
@@ -12,35 +12,35 @@ export const routes = {
     label: 'Shop',
     path: '/',
     icon: 'Store',
-    component: Home
+component: HomePage
   },
   categories: {
     id: 'categories',
     label: 'Categories',
     path: '/categories',
     icon: 'Grid3X3',
-    component: Categories
+component: CategoriesPage
   },
   orders: {
     id: 'orders',
     label: 'Orders',
     path: '/orders',
     icon: 'Package',
-    component: Orders
+component: OrdersPage
   },
   cart: {
     id: 'cart',
     label: 'Cart',
     path: '/cart',
     icon: 'ShoppingCart',
-    component: Cart
+component: CartPage
   },
   product: {
     id: 'product',
     label: 'Product',
     path: '/product/:id',
     icon: 'Package',
-    component: ProductDetail,
+component: ProductDetailPage,
     hidden: true
   },
   checkout: {
@@ -48,7 +48,7 @@ export const routes = {
     label: 'Checkout',
     path: '/checkout',
     icon: 'CreditCard',
-    component: Checkout,
+component: CheckoutPage,
     hidden: true
   },
   orderDetail: {
@@ -56,7 +56,7 @@ export const routes = {
     label: 'Order Detail',
     path: '/order/:id',
     icon: 'Package',
-    component: OrderDetail,
+component: OrderDetailPage,
     hidden: true
   }
 };

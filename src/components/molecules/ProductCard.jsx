@@ -1,5 +1,7 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import ApperIcon from './ApperIcon';
+import ApperIcon from '@/components/ApperIcon';
+import Button from '@/components/atoms/Button';
 
 const ProductCard = ({ product, viewMode = 'grid', onAddToCart, onViewDetails }) => {
   const formatPrice = (price) => {
@@ -75,24 +77,24 @@ const ProductCard = ({ product, viewMode = 'grid', onAddToCart, onViewDetails })
               </div>
               
               <div className="flex gap-2">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={onViewDetails}
-                  className="px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors"
-                >
-                  View Details
-                </motion.button>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button
+                        onClick={onViewDetails}
+                        className="border border-primary text-primary hover:bg-primary hover:text-white"
+                    >
+                        View Details
+                    </Button>
+                </motion.div>
                 
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => onAddToCart(product)}
-                  disabled={product.stock === 0}
-                  className="px-4 py-2 bg-secondary text-white rounded-lg hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <ApperIcon name="ShoppingCart" className="w-4 h-4" />
-                </motion.button>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button
+                        onClick={() => onAddToCart(product)}
+                        disabled={product.stock === 0}
+                        className="bg-secondary text-white hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <ApperIcon name="ShoppingCart" className="w-4 h-4" />
+                    </Button>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -165,24 +167,24 @@ const ProductCard = ({ product, viewMode = 'grid', onAddToCart, onViewDetails })
         </div>
         
         <div className="flex gap-2">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={onViewDetails}
-            className="flex-1 px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors"
-          >
-            View Details
-          </motion.button>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                onClick={onViewDetails}
+                className="flex-1 border border-primary text-primary hover:bg-primary hover:text-white"
+              >
+                View Details
+              </Button>
+          </motion.div>
           
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => onAddToCart(product)}
-            disabled={product.stock === 0}
-            className="px-4 py-2 bg-secondary text-white rounded-lg hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <ApperIcon name="Plus" className="w-4 h-4" />
-          </motion.button>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button
+                onClick={() => onAddToCart(product)}
+                disabled={product.stock === 0}
+                className="bg-secondary text-white hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <ApperIcon name="Plus" className="w-4 h-4" />
+            </Button>
+          </motion.div>
         </div>
       </div>
     </motion.div>

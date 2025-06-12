@@ -1,8 +1,9 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
-import ApperIcon from './ApperIcon';
+import ApperIcon from '@/components/ApperIcon';
 
-const OrderStatus = ({ order, onClick }) => {
+const OrderStatusCard = ({ order, onClick }) => {
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -65,7 +66,7 @@ const OrderStatus = ({ order, onClick }) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-600">
-            {order.items.length} item{order items.length !== 1 ? 's' : ''}
+            {order.items.length} item{order.items.length !== 1 ? 's' : ''}
           </span>
           <span className="text-gray-300">•</span>
           <span className="text-sm font-medium text-gray-900">
@@ -101,4 +102,4 @@ const OrderStatus = ({ order, onClick }) => {
   );
 };
 
-export default OrderStatus;
+export default OrderStatusCard;
