@@ -112,11 +112,18 @@ return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-6">
         {/* Header */}
-        <div className="mb-8 text-center">
+<div className="mb-8 text-center">
           <h1 className="text-3xl font-heading font-bold text-primary mb-2">
-            Welcome to QuickMart
+            Discover Amazing Products at Unbeatable Prices
           </h1>
-          <p className="text-gray-600">Fast, reliable shopping for everything you need</p>
+          <p className="text-gray-600 mb-6">Your one-stop destination for quality products with lightning-fast delivery</p>
+          <div className="flex justify-center mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" 
+              alt="Shopping experience at QuickMart with diverse products and happy customers"
+              className="rounded-lg shadow-lg max-w-full h-48 md:h-64 object-cover"
+            />
+          </div>
         </div>
 
         <div className="mb-8">
